@@ -19,6 +19,7 @@
   display: none;
   color: #FF1100;
   font-size: 13px;
+  margin-top: 4px;
 }
 
 .verify-number__error_active {
@@ -48,10 +49,6 @@
   cursor: default;
 }
 
-.verify-number__input_error {
-  border-color: #FF1100;
-}
-
 .verify-number__input:focus {
   outline: none;
   border: 1px solid #858585;
@@ -59,4 +56,12 @@
 
 .verify-number__input:hover {
   border-color: #C2C2C2;
+}
+
+.verify-number__input_error {
+  border-color: #FF1100;
+}
+
+.verify-number__input_error .verify-number__input:hover {
+  border-color: #FF1100;
 }

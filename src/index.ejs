@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<body>
+    <verify-number></verify-number>
+    <script type="application/javascript">
+      const element = document.getElementsByTagName('verify-number')[0];
+
+      const attributes = {
+        mask: '+7(87IIIIIII)9-I*-II',
+        errortext: 'custom text',
+        iserror: 'true',
+        value: [],
+      };
+
+      const setAttributesToElement = (el, attrs) => {
+        const props = Object.getOwnPropertyNames(attrs);
+
+        props.forEach(prop => {
+          el.setAttribute(prop, attrs[prop]);
+        })
+      };
+
+      window.customElements.whenDefined('verify-number')
+        .then(() => {
+          setAttributesToElement(element, attributes);
+
+          const onChange = (value) => {
+            console.log(value);
+            attributes.value = value;
+            setAttributesToElement(element, {value: attributes.value})
+          };
+
+          element.addEventListener('input', (e) => onChange(e.target.value));
+        });
+    </script>
+</body>
+</html>

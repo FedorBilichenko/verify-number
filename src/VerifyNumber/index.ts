@@ -1,76 +1,6 @@
-const regExp = /[\dX\*]/;
+import styles from './style.css';
 
-const styles = `
-      @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-
-      .verify-number {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-family: 'Roboto', sans-serif;
-        font-size: 15px;
-      }
-      
-      .verify-number__inputs-container {
-        display: flex;
-        align-items: center;
-        color: #333333;
-      }
-      
-      .verify-number__error {
-        display: none;
-        color: #FF1100;
-        font-size: 13px;
-        margin-top: 4px;
-      }
-      
-      .verify-number__error_active {
-        display: block;
-      }
-      
-      .verify-number__box {
-        width: 25px;
-        height: 32px;
-        box-sizing: border-box;
-        padding-top: 8px;
-        text-align: center;
-        border-radius: 2px;
-        background: #F0F0F0;
-        margin: 0 2px;
-      }
-      
-      .verify-number__input {
-        position: relative;
-        width: 25px;
-        height: 32px;
-        box-sizing: border-box;
-        border-radius: 2px;
-        margin: 0 2px;
-        text-align: center;
-        border: 1px solid rgba(0, 0, 0, 0.12);
-        cursor: default;
-      }
-      
-      .verify-number__input:focus {
-        outline: none;
-        border: 1px solid #858585;
-      }
-      
-      .verify-number__input:hover {
-        border-color: #C2C2C2;
-      }
-      
-      .verify-number__input_error {
-        border-color: #FF1100;
-      }
-      
-      .verify-number__input_error .verify-number__input:hover {
-        border-color: #FF1100;
-      }
-      `;
-
-class VerifyNumber extends HTMLElement {
+export default class Index extends HTMLElement {
   constructor() {
     super();
     this.state = {
@@ -233,6 +163,7 @@ class VerifyNumber extends HTMLElement {
     this.createContainer();
     this.root = this.shadowRoot.querySelector('.verify-number');
     this.root.appendChild(this.container);
+    console.log(1);
 
     if (!this.errortext) {
       this.errortext = 'default';
@@ -247,6 +178,8 @@ class VerifyNumber extends HTMLElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     if (name === 'mask' && !!newValue && !oldValue) {
+      console.log(2);
+
       this.render();
     }
 
@@ -273,10 +206,10 @@ class VerifyNumber extends HTMLElement {
   }
 
   render() {
-    console.log('render', this.getAttribute('mask'));
+    console.log('render', 3);
     let inputsNumber = 0;
     this.getAttribute('mask').split('').forEach(el => {
-      if (regExp.test(el)) {
+      if (/[\dX\*]/.test(el)) {
         this.container.appendChild(this.createBox(el === '*' ? '●' : el));
       } else if (el === 'I') {
         this.container.appendChild(this.createInput(inputsNumber++));
@@ -288,6 +221,3 @@ class VerifyNumber extends HTMLElement {
     this.root.appendChild(this.createErrorText())
   }
 }
-
-
-window.customElements.define('verify-number', VerifyNumber);

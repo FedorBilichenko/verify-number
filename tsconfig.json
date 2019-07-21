@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "jsx": "react",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "module": "es6",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "strict": false,
+    "target": "es5",
+    "baseUrl": "src",
+    "emitDecoratorMetadata": true,
+    "allowUnusedLabels": false,
+    "noImplicitReturns": true,
+    "strictNullChecks": true,
+    "pretty": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "exclude": [
+    "dist",
+    "public",
+    "node_modules"
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false
+}
