@@ -1,0 +1,6 @@
+{
+  "name": "custom-input",
+  "version": "1.0.0",
+  "main": "UserCard/UserCard.js",
+  "license": "MIT"
+}
