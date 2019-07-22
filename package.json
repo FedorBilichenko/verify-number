@@ -5,10 +5,10 @@
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "rm -rf ./test-build && webpack --config config/webpack.test.js --colors --progress --bail && npx mocha ./test --recursive --exit",
     "dev": "webpack-dev-server --inline --config config/webpack.dev.js --progress",
     "start": "npm run dev",
-    "build": "rm -rf ./public && webpack --config config/webpack.prod.js --colors --progress --bail"
+    "build": "rm -rf ./dist && webpack --config config/webpack.prod.js --colors --progress --bail"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -32,8 +32,11 @@
     "css-loader": "^3.1.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "mocha": "^6.2.0",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.18.2",
+    "puppeteer": "^1.18.1",
+    "showroom": "^0.9.3",
     "to-string-loader": "^1.1.5",
     "ts-loader": "^6.0.4",
     "tslint": "^5.18.0",
@@ -53,7 +56,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && npm run test"
     }
   }
 }
