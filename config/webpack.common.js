@@ -31,12 +31,27 @@ module.exports = isProd => ({
         ]
       },
       {
+        test: /\.ts$/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'tslint-loader',
+            options: {
+              configFile: 'tslint.json'
+            }
+          }
+        ]
+      },
+      {
         test: /\.(t|j)s$/,
         exclude: /node_modules/,
         use: [
           {
             loader: 'babel-loader',
           },
+          {
+            loader: 'ts-loader',
+          }
         ],
       },
     ],

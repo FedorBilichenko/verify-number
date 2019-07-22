@@ -3,12 +3,19 @@
   "version": "1.0.1",
   "description": "",
   "main": "dist/main.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/main.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --inline --config config/webpack.dev.js --progress",
     "start": "npm run dev",
     "build": "rm -rf ./public && webpack --config config/webpack.prod.js --colors --progress --bail"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "cross-env NODE_ENV=development tslint --fix --format prose --project tsconfig.json",
+      "prettier --ignore-path .tslintignore --single-quote --write",
+      "git add"
+    ]
   },
   "author": "Fedor Bilichenko",
   "license": "ISC",
@@ -21,12 +28,14 @@
     "@types/node": "^12.6.8",
     "autoprefixer": "^9.6.1",
     "babel-loader": "^8.0.6",
+    "cross-env": "^5.2.0",
     "css-loader": "^3.1.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.18.2",
     "to-string-loader": "^1.1.5",
+    "ts-loader": "^6.0.4",
     "tslint": "^5.18.0",
     "tslint-config-airbnb": "^5.11.1",
     "tslint-config-prettier": "^1.18.0",
@@ -38,5 +47,13 @@
     "webpack-dev-server": "^3.7.2",
     "webpack-merge": "^4.2.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "husky": "^3.0.1",
+    "lint-staged": "^9.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
 }

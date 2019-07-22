@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowJs": false,
     "experimentalDecorators": true,
-    "declaration": true,
+    "declaration": false,
     "lib": [
       "es2017",
       "dom"
@@ -16,7 +16,7 @@
     "removeComments": true,
     "sourceMap": true,
     "strict": false,
-    "target": "es5",
+    "target": "es6",
     "baseUrl": "src",
     "paths": {
       "VerifyNumber/*": [ "VerifyNumber/*" ]
