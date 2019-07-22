@@ -68,4 +68,8 @@ npm i
 npm start
 ```
 and visit `http://0.0.0.0:9001`
+### Running test
+```sh
+npm run test
+```
 
