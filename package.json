@@ -8,8 +8,7 @@
     "test": "rm -rf ./test-build && webpack --config config/webpack.test.js --colors --progress --bail && npx mocha ./test --recursive --exit",
     "dev": "webpack-dev-server --inline --config config/webpack.dev.js --progress",
     "start": "npm run dev",
-    "build": "rm -rf ./dist && webpack --config config/webpack.prod.js --colors --progress --bail",
-    "install": "npm run build"
+    "build": "rm -rf ./dist && webpack --config config/webpack.prod.js --colors --progress --bail"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
