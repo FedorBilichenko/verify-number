@@ -47,6 +47,14 @@ interface IAttributes {
   // Example: "1,2,,3" 
 }
 ```
+## Attention
+You need to only refer to verify-number element after its defining. See demo
+```typescript
+window.customElements.whenDefined('verify-number').then(() => {
+  //your code
+});
+```
+
 ## Contributing
 Instructions for running demo locally:
 ### Installation
