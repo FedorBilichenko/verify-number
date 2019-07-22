@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
+  "preinstall": "npm run build",
   "scripts": {
     "test": "rm -rf ./test-build && webpack --config config/webpack.test.js --colors --progress --bail && npx mocha ./test --recursive --exit",
     "dev": "webpack-dev-server --inline --config config/webpack.dev.js --progress",
