@@ -16,8 +16,48 @@ npm i verify-number
   </body>
 </html>
 ```
-### In  your index.js
+### In head of your index.js
 ```typescript
 import 'verify-number';
 ```
+## Attributes
+```typescript
+interface IAttributes {
+  mask: string;
+  /**
+  	 * Following values of symbol:
+  	 * "I" - single input for entering a single digit
+  	 * "X" - gray block with "X"
+  	 * "*" - gray block with "●"
+  	 * <number> - gray block with digit
+  	 * <other> - symbol display inline
+  Example: mask="+7(985)III-II-I*"
+  	 */
+  errortext: string;
+      // A string representation of the error text that can appears under input
+      // Example: errortext="Wrong number" 
+  iserror: string;
+    /** Changes the error state
+      	 * Following values:
+      	 * "false"
+      	 * "true"
+      Example: iserror="false"
+      	 */
+  value: string;
+  // Example: "1,2,,3" 
+}
+```
+## Contributing
+Instructions for running demo locally:
+### Installation
+```sh
+git clone git@github.com:FedorBilichenko/verify-number.git
+cd verify-number
+npm i
+```
+### Running the demo locally
+```sh
+npm start
+```
+and visit `http://0.0.0.0:9001`
 
