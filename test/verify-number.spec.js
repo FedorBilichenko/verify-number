@@ -18,14 +18,7 @@ describe('verify-number', async () => {
     const TEST_MASK = '+7(985)III-**-**';
     await showroom.setAttribute('mask', TEST_MASK);
     const updatedMask = await showroom.getAttribute('mask');
-    assert.equal(updatedMask, TEST_MASK);
-  });
-
-  it('Has upload iserror', async () => {
-    const TEST_IS_ERROR = 'true';
-    await showroom.setAttribute('iserror', TEST_IS_ERROR);
-    const updatedIsError = await showroom.getAttribute('iserror');
-    assert.equal(updatedIsError, TEST_IS_ERROR);
+    assert.strictEqual(updatedMask, TEST_MASK);
   });
 
   it('Has upload texterror', async () => {
