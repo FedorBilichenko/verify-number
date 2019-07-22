@@ -3,7 +3,6 @@
     "allowJs": false,
     "experimentalDecorators": true,
     "declaration": true,
-    "jsx": "react",
     "lib": [
       "es2017",
       "dom"
@@ -19,6 +18,9 @@
     "strict": false,
     "target": "es5",
     "baseUrl": "src",
+    "paths": {
+      "VerifyNumber/*": [ "VerifyNumber/*" ]
+    },
     "emitDecoratorMetadata": true,
     "allowUnusedLabels": false,
     "noImplicitReturns": true,
@@ -30,7 +32,6 @@
   },
   "exclude": [
     "dist",
-    "public",
     "node_modules"
   ],
   "compileOnSave": false,

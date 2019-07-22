@@ -1,0 +1,25 @@
+{"extends": [
+    "tslint:latest",
+    "tslint-config-airbnb",
+    "tslint-config-prettier",
+    "tslint-plugin-prettier"
+  ],
+  "rules": {
+    "array-type": [true, "generic"],
+    "prefer-array-literal": false,
+    "import-name": false,
+    "no-namespace": false,
+    "no-submodule-imports": false,
+    "no-boolean-literal-compare": true,
+    "member-access": false,
+    "object-literal-sort-keys": false,
+    "no-increment-decrement": false,
+    "no-implicit-dependencies": true,
+    "prettier": [true, {
+      "jsxBracketSameLine": false,
+      "bracketSpacing": true,
+      "singleQuote": true,
+      "trailingComma": "es5"
+    }]
+  }
+}

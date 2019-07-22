@@ -1,91 +1,107 @@
 import styles from './style.css';
 
-export default class Index extends HTMLElement {
-  constructor() {
-    super();
-    this.state = {
-      inputs: [],
-      errorNode: null,
-    };
-    this.inputEventListeners = [];
-    this.keyDownEventListeners = [];
-  }
+interface IState {
+  inputs: Array<HTMLInputElement>;
+  errorNode: HTMLElement | null;
+  inputEventListeners: Array<(e: Event) => any>;
+  keyDownEventListeners: Array<(e: Event) => any>;
+}
+
+export default class VerifyNumber extends HTMLElement {
+  state: IState = {
+    inputs: [],
+    errorNode: null,
+    inputEventListeners: [],
+    keyDownEventListeners: [],
+  };
+
+  root: HTMLElement | null;
+  templ: HTMLTemplateElement;
+  container: HTMLElement;
 
   disconnectedCallback() {
     this.state.inputs.forEach((el, index) => {
-      el.removeEventListener('input', this.inputEventListeners[index]);
-      el.removeEventListener('keydown', this.keyDownEventListeners[index]);
-    })
+      el.removeEventListener('input', this.state.inputEventListeners[index]);
+      el.removeEventListener(
+        'keydown',
+        this.state.keyDownEventListeners[index]
+      );
+    });
   }
 
-  static get observedAttributes() {
+  static get observedAttributes(): Array<string> {
     return ['mask', 'errortext', 'iserror', 'value'];
   }
 
-  get value() {
-    return this.state.inputs.map(el => el.value[0] || '').join(',');
+  get value(): string {
+    return this.state.inputs
+      .map((el: HTMLInputElement) => el.value[0] || '')
+      .join(',');
   }
 
-  set value(val) {
+  set value(val: string) {
     this.setAttribute('value', val);
   }
 
-  get mask() {
-    return this.getAttribute('mask');
+  get mask(): string | null {
+    return this.getAttribute('mask') || '';
   }
 
-  set mask(val) {
-    this.setAttribute('mask', val);
+  set mask(val: string | null) {
+    this.setAttribute('mask', val || '');
   }
 
-  get errortext() {
-    return this.getAttribute('errortext')
+  get errortext(): string | null {
+    return this.getAttribute('errortext');
   }
 
-  set errortext(val) {
-    this.setAttribute('errortext', val);
+  set errortext(val: string | null) {
+    this.setAttribute('errortext', val || '');
   }
 
-  get iserror() {
+  get iserror(): string | null {
     return this.getAttribute('iserror');
   }
 
-  set iserror(val) {
-    this.setAttribute('iserror', val);
+  set iserror(val: string | null) {
+    this.setAttribute('iserror', val || '');
   }
 
-  createTextNode(text) {
+  createTextNode(text: string): Node {
     return document.createTextNode(text).cloneNode(true);
   }
 
-  addInputsError () {
-    this.state.inputs.forEach(el => el.classList.add('verify-number__input_error'));
+  addInputsError(): void {
+    this.state.inputs.forEach((el: HTMLInputElement) =>
+      el.classList.add('verify-number__input_error')
+    );
   }
 
-  removeInputsError () {
-    this.state.inputs.forEach(el => el.classList.remove('verify-number__input_error'));
+  removeInputsError(): void {
+    this.state.inputs.forEach((el: HTMLInputElement) =>
+      el.classList.remove('verify-number__input_error')
+    );
   }
 
-  createInput(position) {
-    const input = document.createElement('input');
+  createInput(position: number) {
+    const input: HTMLInputElement = document.createElement('input');
     this.state.inputs[position] = input;
     input.classList.add('verify-number__input');
     input.setAttribute('placeholder', '_');
 
-    const handleInput = (e) => {
+    const handleInput = (e: Event) => {
       e.stopPropagation();
       this.dispatchEvent(new Event('input'));
 
-      const next = this.state.inputs[position + 1];
+      const next: HTMLInputElement = this.state.inputs[position + 1];
       if (next) {
         next.focus();
-        next.setSelectionRange(0,0);
+        next.setSelectionRange(0, 0);
       }
     };
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.code === 'Backspace') {
-        console.log('backspace');
         e.stopPropagation();
         e.preventDefault();
         input.value = '';
@@ -96,10 +112,10 @@ export default class Index extends HTMLElement {
       }
 
       if (e.code === 'ArrowRight') {
-        const next = this.state.inputs[position + 1];
+        const next: HTMLInputElement = this.state.inputs[position + 1];
         if (next) {
           next.focus();
-          next.setSelectionRange(0,0);
+          next.setSelectionRange(0, 0);
         }
       }
 
@@ -112,21 +128,21 @@ export default class Index extends HTMLElement {
 
     input.addEventListener('input', handleInput);
     input.addEventListener('keydown', handleKeyDown);
-    this.inputEventListeners.push(handleInput);
-    this.keyDownEventListeners.push(handleKeyDown);
+    this.state.inputEventListeners.push(handleInput);
+    this.state.keyDownEventListeners.push(handleKeyDown);
 
     return this.state.inputs[position];
   }
 
-  createBox(text) {
-    const box = document.createElement('div');
+  createBox(text: string): HTMLElement {
+    const box: HTMLElement = document.createElement('div');
     box.classList.add('verify-number__box');
     box.textContent = text;
 
     return box;
   }
 
-  createErrorText() {
+  createErrorText(): HTMLElement {
     this.state.errorNode = document.createElement('div');
     this.state.errorNode.classList.add('verify-number__error');
     this.state.errorNode.textContent = this.errortext;
@@ -139,47 +155,46 @@ export default class Index extends HTMLElement {
     this.container.classList.add('verify-number__inputs-container');
   }
 
-  get template() {
-    if (this._template) {
-      return this._template;
-    } else {
-      this._template = document.createElement('template');
-      let templateStyles = document.createElement('style');
-      templateStyles.innerHTML = styles;
-      const templateBody = document.createElement('div');
-      templateBody.classList.add('verify-number');
-      this._template.content.appendChild(templateStyles);
-      this._template.content.appendChild(templateBody);
-
-      return this._template;
+  get template(): HTMLTemplateElement {
+    if (this.templ) {
+      return this.templ;
     }
 
+    this.templ = document.createElement('template');
+    const templateStyles: HTMLStyleElement = document.createElement('style');
+    templateStyles.innerHTML = styles;
+    const templateBody: HTMLElement = document.createElement('div');
+    templateBody.classList.add('verify-number');
+    this.templ.content.appendChild(templateStyles);
+    this.templ.content.appendChild(templateBody);
+
+    return this.templ;
   }
 
   connectedCallback() {
-    const shadowRoot = this.attachShadow({mode: 'open'});
+    const shadowRoot: ShadowRoot = this.attachShadow({ mode: 'open' });
     shadowRoot.appendChild(this.template.content.cloneNode(true));
 
     this.createContainer();
-    this.root = this.shadowRoot.querySelector('.verify-number');
-    this.root.appendChild(this.container);
-    console.log(1);
+    this.root = shadowRoot.querySelector('.verify-number');
+
+    if (this.root) {
+      this.root.appendChild(this.container);
+    }
 
     if (!this.errortext) {
-      this.errortext = 'default';
+      this.errortext = 'Неправильный пароль';
     }
     if (!this.iserror) {
-      this.iserror = false;
+      this.iserror = 'false';
     }
     if (!this.mask) {
       this.mask = '';
     }
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (name === 'mask' && !!newValue && !oldValue) {
-      console.log(2);
-
       this.render();
     }
 
@@ -206,9 +221,9 @@ export default class Index extends HTMLElement {
   }
 
   render() {
-    console.log('render', 3);
-    let inputsNumber = 0;
-    this.getAttribute('mask').split('').forEach(el => {
+    let inputsNumber: number = 0;
+
+    (this.mask || '').split('').forEach((el: string) => {
       if (/[\dX\*]/.test(el)) {
         this.container.appendChild(this.createBox(el === '*' ? '●' : el));
       } else if (el === 'I') {
@@ -217,7 +232,8 @@ export default class Index extends HTMLElement {
         this.container.appendChild(this.createTextNode(el));
       }
     });
-
-    this.root.appendChild(this.createErrorText())
+    if (this.root) {
+      this.root.appendChild(this.createErrorText());
+    }
   }
 }

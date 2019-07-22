@@ -2,7 +2,10 @@ const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = isProd => ({
-  entry: './src/index.ts',
+  entry: {
+    main: './src/index.ts',
+    demo: './demo.ts',
+  },
   resolve: {
     extensions:  ['.js', '.ts', '.css', '.html'],
   },
@@ -41,7 +44,7 @@ module.exports = isProd => ({
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.ejs',
-      title: 'Masked Input',
+      title: 'Verify Number Demo',
       meta: {
         viewport: 'width=device-width, initial-scale=1'
       }
